@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="5">
+    <meta charset="UTF-8">
+    <title>PCR Volume</title>
+</head>
+<body>
+    <h1>Options Put to Call Volume Ratio for {{ ticker }}</h1>
+    <p>Current PCV Ratio is: {{ ratio }}</p>
+    <hr>
+    <table>
+        <tr>
+            <td>
+                {% for table in tables %}
+                    {{ table|safe }}
+                {% endfor %}
+            <td style="vertical-align:top">
+                <div id='chart' class='chart' ></div>
+                <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                <script type='text/javascript'>
+                    Plotly.plot('chart',{{graphJSON | safe}},{});
+                </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
