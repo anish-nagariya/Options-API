@@ -45,9 +45,11 @@ def calc(ticker):
                     except KeyError:
                         pass
 
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(get_options_vol(calls_=True))
-    asyncio.run(get_options_vol(calls_=False))
+    # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.get_event_loop().run_until_complete(get_options_vol(calls_=True))
+    asyncio.get_event_loop().run_until_complete(get_options_vol(calls_=False))
+    # asyncio.run(get_options_vol(calls_=True))
+    # asyncio.run(get_options_vol(calls_=False))
     # print('Puts Volume: {}'.format(result['Puts']))
     # print('Calls Volume: {}'.format(result['Calls']))
     # print('Puts/Calls Ratio: {}'.format(result['Puts'] / result['Calls']))
