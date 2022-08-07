@@ -1,18 +1,13 @@
+from app import app
+
 import json
 import plotly.utils
 import pandas as pd
 from flask import Flask, render_template
-from flask_restful import Api
-
-
-app = Flask(__name__)
-api = Api(app)
-
-print('Started Flask App')
 
 
 @app.route('/<ticker>')
-def hello_world(ticker):
+def display(ticker):
     if ticker == 'SPX':
         ticker = '%5ESPX'
     df = pd.read_csv('pcvr.csv')
@@ -29,7 +24,3 @@ def hello_world(ticker):
                            tables=[df.to_html(classes='data')],
                            titles=df.columns.values,
                            graphJSON=graph)
-
-
-if __name__ == '__main__':
-    app.run()
