@@ -6,6 +6,11 @@ import pandas as pd
 from flask import Flask, render_template
 
 
+@app.route("/")
+def start():
+    return "Welcome to the Options Application"
+
+
 @app.route('/<ticker>')
 def display(ticker):
     if ticker == 'SPX':
