@@ -63,14 +63,16 @@ if __name__ == "__main__":
     for t in tickers: results[t] = []
     reset = False
     if reset:
-        f = open('../pcvr.csv', 'w')
+        f = open('pcvr.csv', 'w')
         f.write("time,")
         for t in tickers:f.write(f'{t},')
         f.write('\n')
         f.close()
-    for _ in range(390):
+
+    while datetime.datetime.now().second > 5: time.sleep(1)
+    while True:
         start_ = time.time()
-        f = open('../pcvr.csv', 'a')
+        f = open('pcvr.csv', 'a')
         print('Running...')
         f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
         resp = p.map(calc, tickers)
@@ -86,4 +88,4 @@ if __name__ == "__main__":
         try:
             time.sleep(60 - (time.time() - start_))
         except Exception:
-            time.sleep(40)
+            time.sleep(120 - (time.time() - start_))
