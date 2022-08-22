@@ -38,3 +38,19 @@ To reset the data, (Let's say you want to clear previous day's data) go to run_p
 ## Help
 
 For any help please message me. 
+
+```
+[Unit]
+Description=A simple Flask uWSGI application
+After=network.target
+
+[Service]
+User=anish
+Group=www-data
+WorkingDirectory=/home/anish/app
+Environment="PATH=/home/anish/app/env/bin"
+ExecStart=/home/anish/app/env/bin/uwsgi --ini app.ini
+
+[Install]
+WantedBy=multi-user.target
+```
