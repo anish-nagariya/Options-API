@@ -70,10 +70,10 @@ if __name__ == "__main__":
         f.close()
 
     while datetime.datetime.now().second > 5: time.sleep(1)
-    while True:
+    while 16 > datetime.datetime.now().hour > 10 or (datetime.datetime.now().hour == 9 and datetime.datetime.now().minute >= 30):
         start_ = time.time()
         f = open('pcvr.csv', 'a')
-        print('Running...')
+        # print('Running...')
         f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
         resp = p.map(calc, tickers)
         for r in resp:
@@ -82,9 +82,9 @@ if __name__ == "__main__":
             f.write(f'{r[1]},')
         f.write('\n')
         f.close()
-        print(results)
-        print('Time Taken {}'.format(time.time() - start_))
-        print('\n')
+        # print(results)
+        # print('Time Taken {}'.format(time.time() - start_))
+        # print('\n')
         try:
             time.sleep(60 - (time.time() - start_))
         except Exception:
