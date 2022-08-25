@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone, timedelta
 import math
 import time
 import asyncio
@@ -62,21 +62,26 @@ if __name__ == "__main__":
     p = Pool(8)
     results = {}
     for t in tickers: results[t] = []
-    reset = True
-    if reset:
-        f = open('pcvr.csv', 'w')
-        f.write("time,")
-        for t in tickers:f.write(f'{t},')
-        f.write('\n')
-        f.close()
-
-    while datetime.datetime.now().second > 5: time.sleep(1)
+    days = 3
+    prev = None
+    while datetime.now().second > 5: time.sleep(1)
     while True:
-        while 16 > datetime.datetime.now().hour >= 10 or datetime.datetime.now().hour == 9 and datetime.datetime.now().minute >= 30 and datetime.datetime.now().weekday() < 5:
+        if days % 3 == 0:
+            f = open('pcvr.csv', 'w')
+            f.write("time,")
+            for t in tickers: f.write(f'{t},')
+            f.write('\n')
+            f.close()
+            days = 0
+        c = datetime.now(timezone.utc)
+        if c.day != prev:
+            prev = c.day
+            days += 1
+        while ((20 > c.hour >= 14) or (c.hour == 13 and c.minute >= 30)) and c.weekday() < 5:
             start_ = time.time()
             print('Running...')
             f = open('pcvr.csv', 'a')
-            f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
+            f.write(f"{(datetime.now(timezone.utc) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
             resp = p.map(calc, tickers)
             fl = False
             for i in resp:
@@ -85,8 +90,8 @@ if __name__ == "__main__":
                     fl = True
             if not fl:
                 for r in resp:
-                    results[r[0]].append([r[1], (datetime.datetime.now(
-                        datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
+                    results[r[0]].append([r[1], (datetime.now(
+                        timezone.utc) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
                     f.write(f'{r[1]},')
                 f.write('\n')
                 f.close()
