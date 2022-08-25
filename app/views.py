@@ -17,7 +17,6 @@ def display(ticker):
     if ticker == 'SPX':
         ticker = '%5ESPX'
     df = pd.read_csv('pcvr.csv')
-    df = df[max(0, len(df) - 1170):]
     df = pd.DataFrame(df)
     df = pd.DataFrame(df[['time', ticker]])
     df = df.reindex(index=df.index[::-1])
