@@ -70,7 +70,7 @@ if __name__ == "__main__":
         f.close()
 
     while datetime.datetime.now().second > 5: time.sleep(1)
-    while 16 > datetime.datetime.now().hour > 10 or (datetime.datetime.now().hour == 9 and datetime.datetime.now().minute >= 30):
+    while True:
         start_ = time.time()
         f = open('pcvr.csv', 'a')
         # print('Running...')
