@@ -70,28 +70,30 @@ if __name__ == "__main__":
         f.write('\n')
         f.close()
 
-    # while datetime.datetime.now().second > 5: time.sleep(1)
+    while datetime.datetime.now().second > 5: time.sleep(1)
     while True:
-        start_ = time.time()
-        print('Running...')
-        f = open('pcvr.csv', 'a')
-        f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
-        resp = p.map(calc, tickers)
-        fl = False
-        for i in resp:
-            if math.isnan(i[1]):
-                fl = True
-        if not fl:  
-            for r in resp:
-                results[r[0]].append([r[1], (datetime.datetime.now(
-                    datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
-                f.write(f'{r[1]},')
-            f.write('\n')
-            f.close()
-            print(results)
-            print('Time Taken {}'.format(time.time() - start_))
-            print('\n')
-            try:
-                time.sleep(60 - (time.time() - start_))
-            except Exception:
-                time.sleep(120 - (time.time() - start_))
+        while 16 > datetime.datetime.now().hour >= 10 or datetime.datetime.now().hour == 9 and datetime.datetime.now().minute >= 30 and datetime.datetime.now().weekday() < 5:
+            start_ = time.time()
+            print('Running...')
+            f = open('pcvr.csv', 'a')
+            f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
+            resp = p.map(calc, tickers)
+            fl = False
+            for i in resp:
+                if math.isnan(i[1]):
+                    print(i[1])
+                    fl = True
+            if not fl:
+                for r in resp:
+                    results[r[0]].append([r[1], (datetime.datetime.now(
+                        datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
+                    f.write(f'{r[1]},')
+                f.write('\n')
+                f.close()
+                print(results)
+                print('Time Taken {}'.format(time.time() - start_))
+                print('\n')
+                try:
+                    time.sleep(60 - (time.time() - start_))
+                except Exception:
+                    time.sleep(120 - (time.time() - start_))
