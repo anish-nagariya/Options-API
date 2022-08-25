@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta, timezone
 import time
 import asyncio
 import aiohttp
@@ -68,17 +68,28 @@ if __name__ == "__main__":
         for t in tickers:f.write(f'{t},')
         f.write('\n')
         f.close()
-
-    while datetime.datetime.now().second > 5: time.sleep(1)
+    days = 0
+    prev = 0
+    while datetime.now().second > 5: time.sleep(1)
     while True:
+        if datetime.now().day != prev:
+            days += 1
+            prev = datetime.now().day
+        if days == 3:
+            days = 0
+            f = open('pcvr.csv', 'w')
+            f.write("time,")
+            for t in tickers: f.write(f'{t},')
+            f.write('\n')
+            f.close()
         start_ = time.time()
         f = open('pcvr.csv', 'a')
         # print('Running...')
-        f.write(f"{(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
+        f.write(f"{(datetime.now(timezone.utc) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
         resp = p.map(calc, tickers)
         for r in resp:
-            results[r[0]].append([r[1], (datetime.datetime.now(
-                datetime.timezone.utc) - datetime.timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
+            results[r[0]].append([r[1], (datetime.now(
+                timezone.utc) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')])
             f.write(f'{r[1]},')
         f.write('\n')
         f.close()
