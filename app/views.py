@@ -11,7 +11,7 @@ def start():
     return "Welcome to the Options Application"
 
 
-@app.route('/<ticker>')
+@app.route('/xx/<ticker>')
 def display(ticker):
     if ticker == 'SPX':
         ticker = '%5ESPX'
