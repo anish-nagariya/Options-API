@@ -105,6 +105,7 @@ if __name__ == "__main__":
             # print('\n')
             try:
                 time.sleep(60 - (time.time() - start_))
+                break 
             except Exception:
                 time.sleep(120 - (time.time() - start_))
-            break
+                break
