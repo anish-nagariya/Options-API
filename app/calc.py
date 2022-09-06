@@ -71,14 +71,14 @@ if __name__ == "__main__":
         f.close()
     days = 0
     prev = 0
-    while datetime.now().second > 3: time.sleep(1)
+    while datetime.now().second > 5: time.sleep(1)
     while True:
         c = datetime.now(timezone.utc).strftime('%H%M')
-        while '1330' < c < '2000' and datetime.now().weekday() < 5:
+        while '1130' < c < '2000' and datetime.now().weekday() < 5:
             if datetime.now().day != prev:
                 days += 1
                 prev = datetime.now().day
-            if days > 3:
+            if days == 3:
                 days = 0
                 f = open('pcvr.csv', 'w')
                 f.write("time,")
@@ -87,9 +87,7 @@ if __name__ == "__main__":
                 f.close()
             start_ = time.time()
             f = open('pcvr.csv', 'a')
-            print('Running...')
-            time.sleep(60 - (time.time() - start_))
-            break
+            # print('Running...')
             f.write(f"{(datetime.now(timezone.utc) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M')},")
             resp = p.map(calc, tickers)
             for r in resp:
