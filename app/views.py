@@ -1,9 +1,8 @@
-from app import app
-
 import json
-import plotly.utils
 import pandas as pd
-from flask import Flask, render_template
+import plotly.utils
+from flask import render_template
+from app import app
 
 
 @app.route("/")
@@ -24,8 +23,9 @@ def display(ticker):
     pd.options.plotting.backend = "plotly"
     fig = df[::-1].plot(x='time', y=ticker, width=1100, height=650)
     graph = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return render_template('base.html', ticker=ticker,
+    return render_template('index.html', ticker=ticker,
                            ratio=df[ticker].iloc[0],
                            tables=[df.to_html(classes='data')],
                            titles=df.columns.values,
                            graphJSON=graph)
+
