@@ -17,7 +17,7 @@ url = 'https://api.polygon.io/v3/snapshot/options/{}/O:{}?apiKey=vu0jeGy1YyyZQR2
 def calc(ticker):
     chains = yf.Ticker(ticker).option_chain()
     # start = time.time()
-    result = {'Puts': 0, 'Calls': 0}
+    result = {'Puts': 1, 'Calls': 1}
 
     def get_tasks(session, type_):
         tasks = []
