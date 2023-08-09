@@ -10,7 +10,7 @@ tickers = ["SPY", "QQQ", "TSLA", "AMZN", "NFLX", "META", "AAPL", "MSFT", "NVDA",
            "BA", "ROKU", "DIA", "MRNA", "BABA", "DIS", "BAC", "JPM", "F", "AMC", "GME", "INTC", "UBER", "SNAP", "SQ",
            "PYPL", "COIN", "MARA", "RIOT", "QCOM", "ZM", "%5ESPX"]
 
-api_key = 'vu0jeGy1YyyZQR2hECjyrauPu4UzOdoq'
+api_key = "ENTER_API_KEY_HERE"
 url = 'https://api.polygon.io/v3/snapshot/options/{}/O:{}?apiKey=vu0jeGy1YyyZQR2hECjyrauPu4UzOdoq'
 
 
